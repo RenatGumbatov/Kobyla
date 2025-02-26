@@ -1,0 +1,17 @@
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\Kobyla.exe
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\Kobyla.deps.json
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\Kobyla.runtimeconfig.json
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\Kobyla.dll
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\Kobyla.pdb
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.AssemblyInfoInputs.cache
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.AssemblyInfo.cs
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.csproj.CoreCompileInputs.cache
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.dll
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\refint\Kobyla.dll
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.pdb
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.genruntimeconfig.cache
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\ref\Kobyla.dll
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\Map.cs
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\map1.txt
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\map2.txt
