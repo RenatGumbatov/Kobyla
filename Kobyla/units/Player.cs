@@ -3,12 +3,8 @@ using Kobyla.maps;
 
 namespace Kobyla.units;
 
-public class Player : Unit
+public class Player(Point position, Game game) : Unit(position, game)
 {
-    public Player(Point position, Game game) : base(position, game)
-    {
-    }
-
     public override void Update()
     {
         var area = getCollision(game.CurrentMap.TeleportAreas.Keys.ToList());
@@ -18,7 +14,7 @@ public class Player : Unit
         game.CurrentMap.Init();
     }
 
-    public Area getCollision(List<Area> areas)
+    private Area getCollision(List<Area> areas)
     {
         foreach (var area in areas)
         {

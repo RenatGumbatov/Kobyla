@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kobyla")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f9a68566f7a6a385c60614671c55a918ab8a678")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kobyla")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kobyla")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

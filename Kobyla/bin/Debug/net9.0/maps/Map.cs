@@ -65,7 +65,7 @@ namespace Kobyla.maps
             Cell cell = null!;
             if (char.IsDigit(c))
             {
-                cell = new TerrainCell(int.Parse(c.ToString()));
+                cell = new Terrain(int.Parse(c.ToString()));
             }
             return cell ?? throw new InvalidOperationException();
         }

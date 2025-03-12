@@ -1,11 +1,10 @@
 ﻿namespace Kobyla.cells;
 
-public class TerrainCell(int height) : Cell
+public class Terrain(int height) : Cell
 {
+    private readonly char[] _brightness = ['-', '\'', ':', '^', '=', '+', '*', '#', '%', '@'];
     public override char GetSymbol()
     {
-        if (Unit != null) return Unit.Symbol;
-        char[] brightness = ['-', '\'', ':', '^', '=', '+', '*', '#', '%', '@'];
-        return brightness[height];
+        return Unit != null ? Unit.Symbol : _brightness[height];
     }
 }
