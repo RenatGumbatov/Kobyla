@@ -4,20 +4,25 @@ namespace Kobyla.units;
 
 public abstract class Unit
 {
-    public Point position;
+    public Point Position;
     public char Symbol;
     protected Game game;
 
     protected Unit(Point position, Game game)
     {
-        this.position = position;
+        Position = position;
         this.game = game;
     }
 
     public abstract void Update();
 
-    public void MoveTo(Point point)
+    public void TeleportTo(Point point)
     {
-        position = point;
+        var cellToMoveTo = game.CurrentMap.Cells[point.X, point.Y];
+        if (cellToMoveTo.IsWall) return;
+        var cellMovingFrom = game.CurrentMap.Cells[Position.X, Position.Y];
+        cellToMoveTo.Unit = this;
+        Position = point;
+        cellMovingFrom.Unit = null!;
     }
 }

@@ -1,6 +1,15 @@
 ﻿namespace Kobyla.area;
 
-public abstract class Area
+public class Area
 {
-    public abstract bool IsInArea(Point point);
+    public Area(Shape shape, AreaType type)
+    {
+        Shape = shape;
+        Type = type;
+    }
+
+    public Shape Shape { get; set; }
+    public AreaType Type { get; private set; }
+
+    public bool IsInArea(Point point) => Shape.IsInArea(point);
 }

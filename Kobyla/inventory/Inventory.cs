@@ -37,6 +37,7 @@ public class Inventory
     public override string ToString()
     {
         var result = "";
+        if (_inventory.Count == 0) return "No items in your inventory!";
         foreach (var item in _inventory)
         {
             result += $"{item.Key.Name}: {item.Value.Amount}\n"; 

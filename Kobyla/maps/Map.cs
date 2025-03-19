@@ -1,19 +1,30 @@
 ﻿using System.Text.RegularExpressions;
 using Kobyla.area;
 using Kobyla.cells;
+using Kobyla.inventory;
+using Kobyla.units;
 
 namespace Kobyla.maps
 {
-    public class Map(string filePath, Game game)
+    public class Map
     {
-        private Game _game = game;
+        private readonly string _filePath;
+        private readonly Game _game;
         private int _width, _height;
-        private Cell[,] _cells = null!;
+        public Cell[,] Cells { private set; get; }
+        public List<Unit> Units = [];
         public Dictionary<Area, String> TeleportAreas = [];
+
+        public Map(string filePath, Game game)
+        {
+            _filePath = filePath;
+            _game = game;
+            Cells = null!;
+        }
 
         public void Init()
         {
-            ReadFile(filePath);
+            ReadFile(_filePath);
         }
 
         public void ReadFile(string path)
@@ -30,7 +41,7 @@ namespace Kobyla.maps
                     var mapName = variables[1].Split('=')[1];
                     Point p1 = new Point(int.Parse(stringsCoords[0]), int.Parse(stringsCoords[1]));
                     Point p2 = new Point(int.Parse(stringsCoords[2]), int.Parse(stringsCoords[3]));
-                    Area area = new Rectangle(p1,p2);
+                    Area area = new Area(new Rectangle(p1,p2), AreaType.TeleportArea);
                     TeleportAreas.Add(area, mapName);
                 }
 
@@ -46,26 +57,37 @@ namespace Kobyla.maps
 
         private void ReadMapData(string[] lines, int linesBeforeMap)
         {
+            Cell lastCell = null!;
+            
             _height = lines.Length-linesBeforeMap;
             _width = lines[linesBeforeMap].Length; 
-            _cells = new Cell[_width, _height];
+            Cells = new Cell[_width, _height];
 
             for (int y = 0; y < _height; y++)
             {
                 var line = lines[y+linesBeforeMap];
                 for (int x = 0; x < _width; x++)
                 {
-                    _cells[x, y] = CreateCell(line[x]);
+                    Cells[x, y] = CreateCell(line[x], lastCell, new Point(x, y));
+                    lastCell = Cells[x, y];
                 }
             }
         }
 
-        private Cell CreateCell(char c)
+        private Cell CreateCell(char c, Cell backupCell, Point playerPosition)
         {
             Cell cell = null!;
             if (char.IsDigit(c))
             {
                 cell = new Terrain(int.Parse(c.ToString()));
+            }
+            else if (c == 'P')
+            {
+                cell = backupCell.GetCopy();
+                Player player = new Player(playerPosition, new Inventory(), _game);
+                cell.Unit = player;
+                Units.Add(player);
+                _game.Player = player;
             }
             return cell ?? throw new InvalidOperationException();
         }
@@ -79,7 +101,7 @@ namespace Kobyla.maps
                 {
                     if (IsInRange(j, 0, _width-1) && IsInRange(i, 0, _height-1))
                     {
-                        output += _cells[j, i].GetSymbol();
+                        output += Cells[j, i].GetSymbol();
                     }
                     else
                     {
@@ -99,7 +121,7 @@ namespace Kobyla.maps
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    output += _cells[x, y].GetSymbol() ;
+                    output += Cells[x, y].GetSymbol() ;
                 }
                 output += "\n";
             }

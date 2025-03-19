@@ -1,6 +1,6 @@
 ﻿namespace Kobyla.area;
 
-public class Rectangle(Point p1, Point p2) : Area
+public class Rectangle(Point p1, Point p2) : Shape
 {
     public Point P1 = p1, P2 = p2;
 
