@@ -4,6 +4,13 @@ public class Messages
 {
     private List<Message> _messages = [];
 
+    public void Update()
+    {
+        foreach (var message in _messages)
+        {
+            message.Update();
+        }
+    }
     public void AddMessage(Message message)
     {
         _messages.Add(message);
@@ -20,7 +27,7 @@ public class Messages
         }
         return output;
     }
-
+    
     private void DeleteDeadMessages()
     {
         foreach (var message in _messages.ToList())

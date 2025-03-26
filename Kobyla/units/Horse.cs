@@ -11,11 +11,11 @@ public class Horse(Game game)
         set => _fear = int.Clamp(value, 0, 100);
     }
 
-    private int iterations;
+    private int _iterations;
     public void Update()
     {
-        iterations += 1;
-        if (iterations%10==0) Fear--; //Decrease fear over time
+        _iterations += 1;
+        if (_iterations%10==0) Fear--; //Decrease fear over time
 
         if (Fear == 100)
         {

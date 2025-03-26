@@ -1,16 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 using Kobyla.area;
 using Kobyla.cells;
-using Kobyla.inventory;
+using Kobyla.commands;
 using Kobyla.units;
+using Inventory = Kobyla.inventory.Inventory;
 
 namespace Kobyla.maps
 {
-    public class Map
+    public class Map : IOnAreaCollision
     {
         private readonly string _filePath;
         private readonly Game _game;
-        private int _width, _height;
+        public int Width { get; private set; }
+        public int Height { get; private set; }
         public Cell[,] Cells { private set; get; }
         public List<Unit> Units = [];
         public Dictionary<Area, String> TeleportAreas = [];
@@ -41,7 +43,7 @@ namespace Kobyla.maps
                     var mapName = variables[1].Split('=')[1];
                     Point p1 = new Point(int.Parse(stringsCoords[0]), int.Parse(stringsCoords[1]));
                     Point p2 = new Point(int.Parse(stringsCoords[2]), int.Parse(stringsCoords[3]));
-                    Area area = new Area(new Rectangle(p1,p2), AreaType.TeleportArea);
+                    Area area = new Area(_game, new Rectangle(p1,p2), null, this);
                     TeleportAreas.Add(area, mapName);
                 }
 
@@ -59,14 +61,14 @@ namespace Kobyla.maps
         {
             Cell lastCell = null!;
             
-            _height = lines.Length-linesBeforeMap;
-            _width = lines[linesBeforeMap].Length; 
-            Cells = new Cell[_width, _height];
+            Height = lines.Length-linesBeforeMap;
+            Width = lines[linesBeforeMap].Length; 
+            Cells = new Cell[Width, Height];
 
-            for (int y = 0; y < _height; y++)
+            for (int y = 0; y < Height; y++)
             {
                 var line = lines[y+linesBeforeMap];
-                for (int x = 0; x < _width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     Cells[x, y] = CreateCell(line[x], lastCell, new Point(x, y));
                     lastCell = Cells[x, y];
@@ -79,7 +81,7 @@ namespace Kobyla.maps
             Cell cell = null!;
             if (char.IsDigit(c))
             {
-                cell = new Terrain(int.Parse(c.ToString()));
+                cell = new Terrain(c - '0');
             }
             else if (c == 'P')
             {
@@ -89,37 +91,15 @@ namespace Kobyla.maps
                 Units.Add(player);
                 _game.Player = player;
             }
-            return cell ?? throw new InvalidOperationException();
-        }
-
-        public string ZoomedInString(int x, int y, int width, int height)
-        {
-            var output = "";
-            for (int i = y; i < height+y; i++)
-            {
-                for (int j = x; j < width+x; j++)
-                {
-                    if (IsInRange(j, 0, _width-1) && IsInRange(i, 0, _height-1))
-                    {
-                        output += Cells[j, i].GetSymbol();
-                    }
-                    else
-                    {
-                        output += " ";
-                    }
-                }
-
-                output += Environment.NewLine;
-            }
-            return output;
+            return cell;
         }
 
         public override string ToString()
         {
             var output = "";
-            for (int y = 0; y < _height; y++)
+            for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x < _width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     output += Cells[x, y].GetSymbol() ;
                 }
@@ -128,9 +108,19 @@ namespace Kobyla.maps
             return output;
         }
 
-        public static bool IsInRange(int value, int min, int max)
+        public void OnAreaCollision(Area area, List<Unit> unitsCollidedWith)
         {
-            return value >= min && value <= max;
+            var nextLevel = TeleportAreas[area];
+            _game.CurrentMap = new Map("maps/" + nextLevel, _game);
+            _game.CurrentMap.Init();
+        }
+
+        public void CheckCollision()
+        {
+            foreach (var area in TeleportAreas.Keys)
+            {
+                area.Update();
+            }
         }
     }
 }

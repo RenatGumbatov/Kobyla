@@ -11,17 +11,21 @@ public class ConsoleUI
     {
         _commands.Add("exit", new Exit(game, this));
         _commands.Add("move", new Move(game, this));
-        _commands.Add("t", new Inventory(game, this));
+        _commands.Add("inventory", new Inventory(game, this));
+        _commands.Add("teleport", new Teleport(game, this));
     }
     public void Start()
     {
         Game game = new Game(this);
+        Camera camera = new Camera(game);
+        
         InitCommands(game);
-        while (true)
+        while (true) // Game loop
         {
             game.Update();
-            Console.WriteLine(game.CurrentMap.ZoomedInString(game.Player.Position.X, game.Player.Position.Y,120,30));
+            Console.WriteLine(camera.ZoomedInString(game.Player.Position.X, game.Player.Position.Y,120,30));
             Console.WriteLine(Messages);
+            Messages.Update();
             Console.Write(">>");
             var line = "";
             if (Console.KeyAvailable)

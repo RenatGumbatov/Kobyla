@@ -12,4 +12,17 @@ public class Rectangle(Point p1, Point p2) : Shape
         var bottom = Math.Max(P1.Y, P2.Y);
         return point.X >= left && point.X <= right && point.Y >= top && point.Y <= bottom;
     }
+
+    public override List<Point> GetPoints()
+    {
+        var result = new List<Point>();
+        for (int x = P1.X; x <= P2.X; x++)
+        {
+            for (int y = P1.Y; y <= P2.Y; y++)
+            {
+                result.Add(new Point(x, y));
+            }
+        }
+        return result;
+    }
 }

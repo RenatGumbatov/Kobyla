@@ -26,6 +26,7 @@ public class Game
         {
             unit.Update();
         }
+        CurrentMap.CheckCollision(); // Teleport areas 
     }
 
     public static void GameOver(String message)

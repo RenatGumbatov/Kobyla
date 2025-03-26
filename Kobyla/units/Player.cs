@@ -9,6 +9,7 @@ public class Player : Unit
 {
     public Inventory Inventory;
     public Horse Horse;
+    
     public Player(Point position, Inventory inventory, Game game) : base(position, game)
     {
         Symbol = 'P';
@@ -18,27 +19,16 @@ public class Player : Unit
 
     public override void Update()
     {
-        CheckAreaCollision();
+        foreach (var area in Areas)
+        {
+            area.Update();
+        }
         Horse.Update();
     }
 
     private void CheckAreaCollision()
     {
-        var areas = GetCollision(game.CurrentMap.TeleportAreas.Keys.ToList());
-        game.ConsoleUI.Messages.AddMessage(new Message(areas.Count.ToString(), 1000, true));
-        foreach (var area in areas)
-        {
-            switch (area.Type)
-            {
-                case AreaType.TeleportArea:
-                    var nextLevel = game.CurrentMap.TeleportAreas[area];
-                    game.CurrentMap = new Map("maps/" + nextLevel, game);
-                    game.CurrentMap.Init();
-                    break;
-                default:
-                    break;
-            }
-        }
+
     }
 
     private List<Area> GetCollision(List<Area> areas)
@@ -52,5 +42,10 @@ public class Player : Unit
             }
         }
         return result;
+    }
+
+    public override string ToString()
+    {
+        return $"Player: {Position}, Inventory: {Inventory}, Horse: {Horse}";
     }
 }

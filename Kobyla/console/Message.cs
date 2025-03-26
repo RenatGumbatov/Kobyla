@@ -3,32 +3,56 @@
 public class Message
 {
     private readonly string _text;
-    private long _time;
+    private bool _countdownStarted = false;
     public bool IsAlive = true;
-    private Timer _timer;
-    private bool _killOnRead;
+    private int FramesOnStart;
+    public int FramesLeft;
 
-    public Message(string text, long time, bool killOnRead = false)
+    public Message(string text, int framesLeft)
     {
         _text = text;
-        _time = time;
-        _killOnRead = killOnRead;
+        FramesLeft = framesLeft;
+        FramesOnStart = framesLeft;
     }
 
+    public void Update()
+    {
+        if (!_countdownStarted) return;
+        if (FramesLeft > 0)
+        {
+            FramesLeft--;
+        }
+        else
+        {
+            IsAlive = false;
+        }
+    }
     public void StartCountdown()
     {
-        _timer = new Timer(OnTimerEnd!, null, _time, Timeout.Infinite);
-    }
-
-    private void OnTimerEnd(object data)
-    {
-        IsAlive = false;
-        _timer.Dispose();
+        _countdownStarted = true;
     }
 
     public override string ToString()
     {
-        if (_killOnRead) IsAlive = false;
-        return _text;
+        return loadingBar(10) + " " + _text;
+    }
+
+    private String loadingBar(int length)
+    {
+        if (length < 3) return "";
+        
+        string output = "[";
+        length -= 2;
+        int framesLeft = (int)((double)FramesLeft / (double)FramesOnStart * (double)length);
+        for (int i = 0; i < framesLeft; i++)
+        {
+            output += "#";
+        }
+        for (int i = 0; i < length-framesLeft; i++)
+        {
+            output += "-";
+        }
+        output += "]";
+        return output;
     }
 }
