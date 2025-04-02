@@ -1,18 +1,17 @@
 ﻿using Kobyla.area;
-using Kobyla.commands;
-using Kobyla.maps;
 using Inventory = Kobyla.inventory.Inventory;
 
 namespace Kobyla.units;
 
 public class Player : Unit
 {
+    public const char Symbol = 'P';
+    
     public Inventory Inventory;
     public Horse Horse;
     
     public Player(Point position, Inventory inventory, Game game) : base(position, game)
     {
-        Symbol = 'P';
         Inventory = inventory;
         Horse = new Horse(game);
     }
@@ -24,6 +23,11 @@ public class Player : Unit
             area.Update();
         }
         Horse.Update();
+    }
+
+    public override char GetSymbol()
+    {
+        return Symbol;
     }
 
     private void CheckAreaCollision()

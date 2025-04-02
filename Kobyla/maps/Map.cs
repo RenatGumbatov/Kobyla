@@ -76,20 +76,33 @@ namespace Kobyla.maps
             }
         }
 
-        private Cell CreateCell(char c, Cell backupCell, Point playerPosition)
+        private Cell CreateCell(char c, Cell backupCell, Point unitPosition)
         {
             Cell cell = null!;
             if (char.IsDigit(c))
             {
                 cell = new Terrain(c - '0');
             }
-            else if (c == 'P')
+            switch (c)
             {
-                cell = backupCell.GetCopy();
-                Player player = new Player(playerPosition, new Inventory(), _game);
-                cell.Unit = player;
-                Units.Add(player);
-                _game.Player = player;
+                case Player.Symbol:
+                {
+                    cell = backupCell.GetCopy();
+                    var player = new Player(unitPosition, new Inventory(_game), _game);
+                    cell.Unit = player;
+                    Units.Add(player);
+                    _game.Player = player;
+                    break;
+                }
+                case Wall.Symbol:
+                    cell = new Wall();
+                    break;
+                case Deer.Symbol:
+                    cell = backupCell.GetCopy();
+                    var deer = new Deer(unitPosition, _game);
+                    cell.Unit = deer;
+                    Units.Add(deer);
+                    break;
             }
             return cell;
         }
@@ -110,6 +123,8 @@ namespace Kobyla.maps
 
         public void OnAreaCollision(Area area, List<Unit> unitsCollidedWith)
         {
+            if (_filePath.Equals("maps/map3.txt")) _game.Win("You got back to the stables!s");
+            
             var nextLevel = TeleportAreas[area];
             _game.CurrentMap = new Map("maps/" + nextLevel, _game);
             _game.CurrentMap.Init();

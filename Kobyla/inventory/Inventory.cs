@@ -1,15 +1,19 @@
-﻿namespace Kobyla.inventory;
+﻿using Kobyla.commands;
 
-public class Inventory
+namespace Kobyla.inventory;
+
+public class Inventory(Game game)
 {
     private Dictionary<Item, Item> _inventory = new();
 
     public void UseItem(string itemName)
     {
+        var found = false;
         foreach (var item in _inventory)
         {
             if (item.Key.Name.Equals(itemName))
             {
+                found = true;
                 if (item.Value.Amount >= 1)
                 {
                     item.Value.Use();
@@ -21,6 +25,7 @@ public class Inventory
                 }
             }
         }
+        if (!found) game.ConsoleUI.Messages.AddMessage(new Message("Item not found!"));
     }
     public void AddItem(Item item)
     {

@@ -16,3 +16,4 @@ C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\Map.cs
 C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\map1.txt
 C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\map2.txt
 C:\Users\Tim\RiderProjects\Kobyla\Kobyla\obj\Debug\net9.0\Kobyla.sourcelink.json
+C:\Users\Tim\RiderProjects\Kobyla\Kobyla\bin\Debug\net9.0\maps\map3.txt

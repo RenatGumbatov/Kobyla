@@ -7,7 +7,7 @@ public abstract class Item(Game game)
     public int Amount = 1;
     public bool RemoveOnUse { get; init; }
 
-    public virtual void Use() {}
+    public abstract void Use();
 
     public bool isRemoveOnUse() => RemoveOnUse;
     protected bool Equals(Item other)

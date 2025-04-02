@@ -1,9 +1,22 @@
 ﻿namespace Kobyla.commands;
 
-public class Inventory(Game game, ConsoleUI consoleUI) : Command(game, consoleUI)
+public class Inventory : Command
 {
+    public Inventory(Game game) : base(game)
+    {
+        PossibleAmountOfArguments.Add(0);
+        HelpText = "Lists all inventory items.";
+    }
+
+    public static readonly string[] KeyWords = ["Inventory", "i"];
     public override void Execute(string[] args)
     {
-        consoleUI.Messages.AddMessage(new Message(game.Player.Inventory.ToString(), 100));
+        if (AmountOfArgumentsWarning(args.Length, KeyWords)) return;
+        Game.ConsoleUI.Messages.AddMessage(new Message(Game.Player.Inventory.ToString(), 100));
+    }
+
+    public override string[] getKeyWords()
+    {
+        return KeyWords;
     }
 }

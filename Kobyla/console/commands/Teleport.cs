@@ -4,12 +4,16 @@ namespace Kobyla.commands;
 
 public class Teleport : Command
 {
-    public Teleport(Game game, ConsoleUI consoleUI) : base(game, consoleUI)
+    public static readonly string[] KeyWords = ["t", "teleport"];
+    public Teleport(Game game) : base(game)
     {
+        HelpText = "Teleports to given position. Arguments: int x, int y";
+        PossibleAmountOfArguments.Add(2);
     }
 
     public override void Execute(string[] args)
     {
+        if (AmountOfArgumentsWarning(args.Length, KeyWords)) return;
         try
         {
             int x = int.Parse(args[0]);
@@ -21,5 +25,10 @@ public class Teleport : Command
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public override string[] getKeyWords()
+    {
+        return KeyWords;
     }
 }

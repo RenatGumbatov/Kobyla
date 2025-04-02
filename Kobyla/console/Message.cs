@@ -4,23 +4,40 @@ public class Message
 {
     private readonly string _text;
     private bool _countdownStarted = false;
+    private readonly bool _showLoadingBar = true;
     public bool IsAlive = true;
-    private int FramesOnStart;
-    public int FramesLeft;
+    private readonly int _framesOnStart;
+    private const int StandartFramesLength = 100;
+    private int _framesLeft;
 
     public Message(string text, int framesLeft)
     {
         _text = text;
-        FramesLeft = framesLeft;
-        FramesOnStart = framesLeft;
+        _framesLeft = framesLeft;
+        _framesOnStart = framesLeft;
+    }
+    public Message(string text, int framesLeft, bool showLoadingBar)
+    {
+        _text = text;
+        _framesLeft = framesLeft;
+        _framesOnStart = framesLeft;
+        _showLoadingBar = showLoadingBar;
+    }
+
+    public Message(string text)
+    {
+        _text = text;
+        _framesLeft = StandartFramesLength;
+        _framesOnStart = StandartFramesLength;
+        _showLoadingBar = true;
     }
 
     public void Update()
     {
         if (!_countdownStarted) return;
-        if (FramesLeft > 0)
+        if (_framesLeft > 0)
         {
-            FramesLeft--;
+            _framesLeft--;
         }
         else
         {
@@ -34,7 +51,8 @@ public class Message
 
     public override string ToString()
     {
-        return loadingBar(10) + " " + _text;
+        if (_showLoadingBar) return loadingBar(10) + " " + _text;
+        return _text;
     }
 
     private String loadingBar(int length)
@@ -43,7 +61,7 @@ public class Message
         
         string output = "[";
         length -= 2;
-        int framesLeft = (int)((double)FramesLeft / (double)FramesOnStart * (double)length);
+        int framesLeft = (int)((double)_framesLeft / (double)_framesOnStart * (double)length);
         for (int i = 0; i < framesLeft; i++)
         {
             output += "#";
