@@ -2,5 +2,5 @@
 
 public interface IGetSymbol
 {
-    
+    char GetSymbol();
 }

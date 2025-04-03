@@ -11,7 +11,7 @@ public class Inventory(Game game)
         var found = false;
         foreach (var item in _inventory)
         {
-            if (item.Key.Name.Equals(itemName))
+            if (item.Key.Name.ToLower().Equals(itemName.ToLower()))
             {
                 found = true;
                 if (item.Value.Amount >= 1)

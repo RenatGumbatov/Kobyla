@@ -9,7 +9,7 @@ namespace Kobyla.maps
 {
     public class Map : IOnAreaCollision
     {
-        private readonly string _filePath;
+        private string _filePath;
         private readonly Game _game;
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -123,9 +123,10 @@ namespace Kobyla.maps
 
         public void OnAreaCollision(Area area, List<Unit> unitsCollidedWith)
         {
-            if (_filePath.Equals("maps/map3.txt")) _game.Win("You got back to the stables!s");
             
             var nextLevel = TeleportAreas[area];
+            if (nextLevel == "map4.txt ") _game.Win("You got back to the stables!");
+
             _game.CurrentMap = new Map("maps/" + nextLevel, _game);
             _game.CurrentMap.Init();
         }

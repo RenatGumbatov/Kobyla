@@ -10,6 +10,7 @@ public class ReleaseReigns : Command
     public static readonly string[] KeyWords = ["ReleaseReigns", "Release", "RR"];
     public override void Execute(string[] args)
     {
+        if (AmountOfArgumentsWarning(args.Length, KeyWords)) return;
         Game.Player.Horse.ReleaseReigns();
     }
 
